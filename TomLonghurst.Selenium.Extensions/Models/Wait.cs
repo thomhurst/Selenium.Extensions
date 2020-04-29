@@ -15,16 +15,16 @@ namespace TomLonghurst.Selenium.Extensions.Models
             _webDriver = webDriver;
         }
 
-        public void ForJavascriptToLoad(TimeSpan timeout)
+        public void ForPageReady(TimeSpan timeout)
         {
             WaitForJavascript(timeout, "return document.readyState == \"complete\"");
         }
         
-        private void ForJavascriptToLoad(TimeSpan timeout, out TimeSpan remainingTimeout)
+        private void ForPageReady(TimeSpan timeout, out TimeSpan remainingTimeout)
         {
             var stopwatch = Stopwatch.StartNew();
 
-            ForJavascriptToLoad(timeout);
+            ForPageReady(timeout);
             
             var elapsed = stopwatch.Elapsed;
 
@@ -33,7 +33,7 @@ namespace TomLonghurst.Selenium.Extensions.Models
         
         public void ForJQuery(TimeSpan timeout)
         {
-            ForJavascriptToLoad(timeout, out var remainingTimeout);
+            ForPageReady(timeout, out var remainingTimeout);
             WaitForJavascript(remainingTimeout, "return window.jQuery == null || jQuery.active == 0");
         }
 

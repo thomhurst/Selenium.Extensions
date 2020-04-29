@@ -24,5 +24,10 @@ namespace TomLonghurst.Selenium.Extensions.Extensions
         {
             return new Mouse(webDriver);
         }
+        
+        public static BrowserInformation BrowserInformation(this IWebDriver webDriver)
+        {
+            return new BrowserInformation(webDriver);
+        }
     }
 }
