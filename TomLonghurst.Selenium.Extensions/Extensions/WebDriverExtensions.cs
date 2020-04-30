@@ -1,4 +1,5 @@
 using OpenQA.Selenium;
+using OpenQA.Selenium.Internal;
 using TomLonghurst.Selenium.Extensions.Models;
 
 namespace TomLonghurst.Selenium.Extensions.Extensions
@@ -28,6 +29,19 @@ namespace TomLonghurst.Selenium.Extensions.Extensions
         public static BrowserInformation BrowserInformation(this IWebDriver webDriver)
         {
             return new BrowserInformation(webDriver);
+        }
+
+        public static IWebDriver GetRootWebDriver(this IWebDriver webDriver)
+        {
+            while (true)
+            {
+                if (!(webDriver is IWrapsDriver wrapsDriver))
+                {
+                    return webDriver;
+                }
+                
+                webDriver = wrapsDriver.WrappedDriver;
+            }
         }
     }
 }
