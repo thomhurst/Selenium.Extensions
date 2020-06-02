@@ -22,13 +22,13 @@ namespace TomLonghurst.Selenium.Extensions.Models
             WaitForJavascript(timeout, "return document.readyState == \"complete\"");
         }
 
-        public void Until(Func<IWebDriver, bool> predicate, TimeSpan timeout, List<Type> allowedExceptions)
+        public void Until(Func<IWebDriver, bool> predicate, TimeSpan timeout, params Type[] allowedExceptions)
         {
             var wait = new WebDriverWait(_webDriver, timeout);
             
             if (allowedExceptions == null || !allowedExceptions.Any())
             {
-                allowedExceptions = new List<Type> { typeof(Exception) };
+                allowedExceptions = new []{ typeof(Exception) };
             }
             
             wait.IgnoreExceptionTypes(allowedExceptions.ToArray());
