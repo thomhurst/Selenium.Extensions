@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using ExpectedConditions = SeleniumExtras.WaitHelpers.ExpectedConditions;
@@ -18,6 +20,20 @@ namespace TomLonghurst.Selenium.Extensions.Models
         public void ForPageReady(TimeSpan timeout)
         {
             WaitForJavascript(timeout, "return document.readyState == \"complete\"");
+        }
+
+        public void Until(Func<IWebDriver, bool> predicate, TimeSpan timeout, List<Type> allowedExceptions)
+        {
+            var wait = new WebDriverWait(_webDriver, timeout);
+            
+            if (allowedExceptions == null || !allowedExceptions.Any())
+            {
+                allowedExceptions = new List<Type> { typeof(Exception) };
+            }
+            
+            wait.IgnoreExceptionTypes(allowedExceptions.ToArray());
+
+            wait.Until(predicate);
         }
         
         private void ForPageReady(TimeSpan timeout, out TimeSpan remainingTimeout)
