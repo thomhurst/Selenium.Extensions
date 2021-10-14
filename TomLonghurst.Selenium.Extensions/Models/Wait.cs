@@ -97,7 +97,7 @@ namespace TomLonghurst.Selenium.Extensions.Models
 
         private static bool ExecuteJavascriptPageFinishedLoadingCheck(IWebDriver driver, string javascript)
         {
-            if (!(driver is IJavaScriptExecutor javaScriptExecutor))
+            if (driver is not IJavaScriptExecutor javaScriptExecutor)
             {
                 return true;
             }

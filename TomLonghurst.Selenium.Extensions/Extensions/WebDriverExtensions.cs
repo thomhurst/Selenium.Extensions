@@ -35,7 +35,7 @@ namespace TomLonghurst.Selenium.Extensions.Extensions
         {
             while (true)
             {
-                if (!(webDriver is IWrapsDriver wrapsDriver))
+                if (webDriver is not IWrapsDriver wrapsDriver)
                 {
                     return webDriver;
                 }
